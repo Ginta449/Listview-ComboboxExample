@@ -7,18 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Text.RegularExpressions;//according to Microsoft had to add this bit to work with regular expressions
+using System.Text.RegularExpressions;
 
 
 namespace PatientManagementSystemByDeirdreLouiseGinta
 {
     public partial class FormPatientManagementSystem : Form
     {
-        Regex validateStrings = new Regex("^[A-Za-z]+$"); //Add regular expressions for string input to stop program crashing
-        Regex validateIntegers = new Regex("^[0-9]+$"); //Do same for integers. Have them at class level so can be used and modified in all methods
-        List<Consultant> consultant = new List<Consultant>();//generally consultants are not diplayed in management systems
-        List<Patient> patient = new List<Patient>(); //save patient objects in a listbox
-        List<Clinic> clinicName = new List<Clinic>();//added new class clinic in hopes that in future can be developed further
+        Regex validateStrings = new Regex("^[A-Za-z]+$"); 
+        Regex validateIntegers = new Regex("^[0-9]+$"); 
+        List<Consultant> consultant = new List<Consultant>();
+        List<Patient> patient = new List<Patient>(); 
+        List<Clinic> clinicName = new List<Clinic>();
         List<Person> person = new List<Person>();
         public FormPatientManagementSystem()
         {
@@ -28,7 +28,7 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
         private void buttonAddPatient_Click(object sender, EventArgs e)
         {
 
-          PatientList(); //Created seperate methods to break up the code and make it easier to read
+          PatientList(); 
           ClearTextBoxes();
         }
 
@@ -36,12 +36,12 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
         {
             
             if (validateStrings.IsMatch(textBoxFirstName.Text) && (validateStrings.IsMatch(textBoxSurname.Text) && (validateStrings.IsMatch(richTextBoxAddress.Text)) && (validateIntegers.IsMatch(textBoxPhone.Text)) && (validateIntegers.IsMatch(textBoxMRN.Text))))
-            {//using regex class to check if fields match if they do proceed with code
+            {
                
                 patient.Add(new Patient(richTextBoxAddress.Text, int.Parse(textBoxMRN.Text), textBoxFirstName.Text, textBoxSurname.Text, int.Parse(textBoxPhone.Text)));
-                //add patient information to the listbox from the fields provided in the form
+                
 
-                foreach (var p in patient)//use forloop to print subitems and display items neatly in listview
+                foreach (var p in patient)
                 {
                    
                     ListViewItem pt = new ListViewItem(p.firstName);
@@ -51,21 +51,21 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
                     pt.SubItems.Add(p.patientMRN.ToString());
                     listViewPatientList.Items.Add(pt);
 
-                    comboBoxSelectPatient.Items.Add(p.firstName); //add first name of patient to the combobox
+                    comboBoxSelectPatient.Items.Add(p.firstName); 
                 }
 
             }
             else
             {
                 MessageBox.Show("Please enter all fields correctly to submit a patient!");
-                //if the input does not match of that provided by regular expression display error message
+                
             }
            
 
         }
         public void ClearTextBoxes()
         {
-            textBoxFirstName.Clear();//just to make it neater doing the clears in seperate method
+            textBoxFirstName.Clear();
             textBoxSurname.Clear();
             textBoxPhone.Clear();
             richTextBoxAddress.Clear();
@@ -77,26 +77,25 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
         {
             
             consultant.Add(new Consultant(textBoxFirstName.Text, textBoxSurname.Text, int.Parse(textBoxPhone.Text), int.Parse(textBoxRegNo.Text)));
-            //therefore consultant is straight added into consultant combobox
-            //however it is important to mention that consultant can also become a patient therefore option to add consultant as patient was left available
+            
             foreach (var c in consultant)
             {
                 
                 comboBoxSelectConsultant.Items.Add(c.firstName);
-                //add consultants to combobox
+                
             }
-            ClearTextBoxes();//calling clear textboxes method to clear texboxes after each button click
+            ClearTextBoxes();
         }
 
         private void FormPatientManagementSystem_Load(object sender, EventArgs e)
         {
            
-            clinicName.Add(new Clinic("Monaghan"));//adding clinic names
+            clinicName.Add(new Clinic("Monaghan"));
             clinicName.Add(new Clinic("Cavan"));
 
             foreach (var clinic in clinicName)
             {
-                comboBoxClinicName.Items.Add(clinic);//adding clinic names to clinic combobox
+                comboBoxClinicName.Items.Add(clinic);
             }
         }
 
@@ -111,33 +110,6 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
             var selectedPatient = this.comboBoxSelectPatient.GetItemText(this.comboBoxSelectPatient.SelectedItem);
             var selectedConsultant = this.comboBoxSelectConsultant.GetItemText(this.comboBoxSelectConsultant.SelectedItem);
 
-
-            //List<object> join = new List<object>();
-            //join.AddRange(person);
-            //join.AddRange(clinicName);
-            //join.AddRange(patient);
-            //join.AddRange(consultant);
-
-            //foreach (var pc in patient)
-            //{
-            //    if (selectedPatient.Contains(pc.firstName) && selectedConsultant.Contains(pc.firstName))
-            //    {
-            //        ListViewItem pt = new ListViewItem();
-            //        pt.SubItems.Add(pc.firstName);
-            //        pt.SubItems.Add(pc.lastName);
-            //        pt.SubItems.Add(pc.phone.ToString());
-            //        pt.SubItems.Add(pc.patientAddress);
-            //        pt.SubItems.Add(pc.patientMRN.ToString());
-            //        pt.SubItems.Add(pc.firstName);
-            //        pt.SubItems.Add(pc.lastName);
-            //        pt.SubItems.Add(pc.phone.ToString());
-            //        pt.SubItems.Add(pc.clinicName);
-            //        pt.SubItems.Add(pc.regNo.toString());
-
-            //        listViewClinicList.Items.Add(pt.ToString());
-
-            //        }
-            //    }
         }
 
 
@@ -149,7 +121,7 @@ namespace PatientManagementSystemByDeirdreLouiseGinta
         {
             foreach (ListViewItem remove in listViewPatientList.SelectedItems)
             {
-                remove.Remove();//providing user with the option to remove a patient from listview
+                remove.Remove();
             }
           
         }
